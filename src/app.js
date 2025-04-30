@@ -1,11 +1,10 @@
-const frameWork = new FrameWork(() => frameWork.Router());let holder
+const frameWork = new FrameWork(() => frameWork.Router()); 
 function TodoApp() {
     const [todos, setTodos] = frameWork.useState([]);
     const [filter, setFilter] = frameWork.useState("all");
     const [editingID, setEditingID] = frameWork.useState(null);
-    holder = todos
     function toggleTodo(id) {
-        setTodos(holder.map(todo => {
+        setTodos(todos.map(todo => {
             if (todo.id === id) {
                 return { ...todo, completed: !todo.completed, checked: "true" };
             }
@@ -19,22 +18,22 @@ function TodoApp() {
             return;
         }
         e.target.value = ""
-        setTodos([...holder, { id: Date.now(), text: newTodo, completed: false }]);
+        setTodos([...todos, { id: Date.now(), text: newTodo, completed: false }]);
     }
 
     function saveTodo(id, e) {
         let newText = e.target.value;
         if (newText.trim() === "") {
-            setTodos(holder.filter(todo => todo.id !== id));
+            setTodos(todos.filter(todo => todo.id !== id));
         } else {
-            setTodos(holder.map(todo =>
+            setTodos(todos.map(todo =>
                 todo.id === id ? { ...todo, text: newText } : todo
             ));
         }
         setEditingID(null);
     }
 
-    const filteredTodos = holder.filter(todo => {
+    const filteredTodos = todos.filter(todo => {
         if (filter === "active") {
             return !todo.completed;
         }
@@ -77,7 +76,7 @@ function TodoApp() {
                                     id: "todo-input",
                                     type: "text",
                                     "data-testid": "text-input",
-                                    placeholder: "What needs to be done?",
+                                    placetodos: "What needs to be done?",
 
                                     onkeydown: (e) => {
                                         if (e.key === "Enter") {
@@ -101,7 +100,7 @@ function TodoApp() {
                 ]
             }]
     }
-    if (holder.length !== 0) {
+    if (todos.length !== 0) {
         let footer = {
             type: "footer",
             props: {
@@ -116,7 +115,7 @@ function TodoApp() {
                     },
                     children: [{
                         type: "text",
-                        content: `${holder.filter(todo => !todo.completed).length} ${holder.filter(todo => !todo.completed).length === 1 ? 'item' : 'items'} left!`
+                        content: `${todos.filter(todo => !todo.completed).length} ${todos.filter(todo => !todo.completed).length === 1 ? 'item' : 'items'} left!`
                     }]
                 },
                 {
@@ -190,7 +189,7 @@ function TodoApp() {
                     props: {
                         class: "clear-completed",
                         onclick: () => {
-                            setTodos(holder.filter(todo => !todo.completed));
+                            setTodos(todos.filter(todo => !todo.completed));
                         }
                     },
                     children: [
@@ -219,9 +218,9 @@ function TodoApp() {
                                 type: "checkbox",
                                 id: "toggle-all",
                                 "data-testid": "toggle-all",
-                                checked: holder.length > 0 && holder.every(todo => todo.completed),
+                                checked: todos.length > 0 && todos.every(todo => todo.completed),
                                 onclick: () => {
-                                    setTodos(holder.map(todo => ({ ...todo, completed: !holder.every(t => t.completed) })));
+                                    setTodos(todos.map(todo => ({ ...todo, completed: !todos.every(t => t.completed) })));
                                 }
                             },
                             children: []
@@ -289,7 +288,7 @@ function TodoApp() {
                                             class: "destroy",
                                             "data-testid": "todo-item-button",
                                             onclick: () => {
-                                                setTodos(holder.filter(t => t.id !== todo.id));
+                                                setTodos(todos.filter(t => t.id !== todo.id));
                                             }
                                         },
                                         children: []
@@ -332,9 +331,8 @@ function TodoAppActive() {
     const [todos, setTodos] = frameWork.useState([]);
     const [filter, setFilter] = frameWork.useState("active");
     const [editingID, setEditingID] = frameWork.useState(null);
-    holder = todos
     function toggleTodo(id) {
-        setTodos(holder.map(todo => {
+        setTodos(todos.map(todo => {
             if (todo.id === id) {
                 return { ...todo, completed: !todo.completed, checked: "true" };
             }
@@ -348,22 +346,22 @@ function TodoAppActive() {
             return;
         }
         e.target.value = ""
-        setTodos([...holder, { id: Date.now(), text: newTodo, completed: false }]);
+        setTodos([...todos, { id: Date.now(), text: newTodo, completed: false }]);
     }
 
     function saveTodo(id, e) {
         let newText = e.target.value;
         if (newText.trim() === "") {
-            setTodos(holder.filter(todo => todo.id !== id));
+            setTodos(todos.filter(todo => todo.id !== id));
         } else {
-            setTodos(holder.map(todo =>
+            setTodos(todos.map(todo =>
                 todo.id === id ? { ...todo, text: newText } : todo
             ));
         }
         setEditingID(null);
     }
 
-    const filteredTodos = holder.filter(todo => {
+    const filteredTodos = todos.filter(todo => {
         if (filter === "active") {
             return !todo.completed;
         }
@@ -406,7 +404,7 @@ function TodoAppActive() {
                                     id: "todo-input",
                                     type: "text",
                                     "data-testid": "text-input",
-                                    placeholder: "What needs to be done?",
+                                    placetodos: "What needs to be done?",
 
                                     onkeydown: (e) => {
                                         if (e.key === "Enter") {
@@ -430,7 +428,7 @@ function TodoAppActive() {
                 ]
             }]
     }
-    if (holder.length !== 0) {
+    if (todos.length !== 0) {
         let footer = {
             type: "footer",
             props: {
@@ -445,7 +443,7 @@ function TodoAppActive() {
                     },
                     children: [{
                         type: "text",
-                        content: `${holder.filter(todo => !todo.completed).length} ${holder.filter(todo => !todo.completed).length === 1 ? 'item' : 'items'} left!`
+                        content: `${todos.filter(todo => !todo.completed).length} ${todos.filter(todo => !todo.completed).length === 1 ? 'item' : 'items'} left!`
                     }]
                 },
                 {
@@ -519,7 +517,7 @@ function TodoAppActive() {
                     props: {
                         class: "clear-completed",
                         onclick: () => {
-                            setTodos(holder.filter(todo => !todo.completed));
+                            setTodos(todos.filter(todo => !todo.completed));
                         }
                     },
                     children: [
@@ -548,9 +546,9 @@ function TodoAppActive() {
                                 type: "checkbox",
                                 id: "toggle-all",
                                 "data-testid": "toggle-all",
-                                checked: holder.length > 0 && holder.every(todo => todo.completed),
+                                checked: todos.length > 0 && todos.every(todo => todo.completed),
                                 onclick: () => {
-                                    setTodos(holder.map(todo => ({ ...todo, completed: !holder.every(t => t.completed) })));
+                                    setTodos(todos.map(todo => ({ ...todo, completed: !todos.every(t => t.completed) })));
                                 }
                             },
                             children: []
@@ -618,7 +616,7 @@ function TodoAppActive() {
                                             class: "destroy",
                                             "data-testid": "todo-item-button",
                                             onclick: () => {
-                                                setTodos(holder.filter(t => t.id !== todo.id));
+                                                setTodos(todos.filter(t => t.id !== todo.id));
                                             }
                                         },
                                         children: []
@@ -661,9 +659,8 @@ function TodoAppcompleted() {
     const [todos, setTodos] = frameWork.useState([]);
     const [filter, setFilter] = frameWork.useState("completed");
     const [editingID, setEditingID] = frameWork.useState(null);
-    holder = todos
     function toggleTodo(id) {
-        setTodos(holder.map(todo => {
+        setTodos(todos.map(todo => {
             if (todo.id === id) {
                 return { ...todo, completed: !todo.completed, checked: "true" };
             }
@@ -677,22 +674,22 @@ function TodoAppcompleted() {
             return;
         }
         e.target.value = ""
-        setTodos([...holder, { id: Date.now(), text: newTodo, completed: false }]);
+        setTodos([...todos, { id: Date.now(), text: newTodo, completed: false }]);
     }
 
     function saveTodo(id, e) {
         let newText = e.target.value;
         if (newText.trim() === "") {
-            setTodos(holder.filter(todo => todo.id !== id));
+            setTodos(todos.filter(todo => todo.id !== id));
         } else {
-            setTodos(holder.map(todo =>
+            setTodos(todos.map(todo =>
                 todo.id === id ? { ...todo, text: newText } : todo
             ));
         }
         setEditingID(null);
     }
 
-    const filteredTodos = holder.filter(todo => {
+    const filteredTodos = todos.filter(todo => {
         if (filter === "active") {
             return !todo.completed;
         }
@@ -735,7 +732,7 @@ function TodoAppcompleted() {
                                     id: "todo-input",
                                     type: "text",
                                     "data-testid": "text-input",
-                                    placeholder: "What needs to be done?",
+                                    placetodos: "What needs to be done?",
 
                                     onkeydown: (e) => {
                                         if (e.key === "Enter") {
@@ -753,13 +750,13 @@ function TodoAppcompleted() {
                                     for: "todo-input"
                                 },
                                 children: []
-                            }
+                            },
                         ]
                     }
                 ]
             }]
     }
-    if (holder.length !== 0) {
+    if (todos.length !== 0) {
         let footer = {
             type: "footer",
             props: {
@@ -774,7 +771,7 @@ function TodoAppcompleted() {
                     },
                     children: [{
                         type: "text",
-                        content: `${holder.filter(todo => !todo.completed).length} ${holder.filter(todo => !todo.completed).length === 1 ? 'item' : 'items'} left!`
+                        content: `${todos.filter(todo => !todo.completed).length} ${todos.filter(todo => !todo.completed).length === 1 ? 'item' : 'items'} left!`
                     }]
                 },
                 {
@@ -848,7 +845,7 @@ function TodoAppcompleted() {
                     props: {
                         class: "clear-completed",
                         onclick: () => {
-                            setTodos(holder.filter(todo => !todo.completed));
+                            setTodos(todos.filter(todo => !todo.completed));
                         }
                     },
                     children: [
@@ -877,9 +874,9 @@ function TodoAppcompleted() {
                                 type: "checkbox",
                                 id: "toggle-all",
                                 "data-testid": "toggle-all",
-                                checked: holder.length > 0 && holder.every(todo => todo.completed),
+                                checked: todos.length > 0 && todos.every(todo => todo.completed),
                                 onclick: () => {
-                                    setTodos(holder.map(todo => ({ ...todo, completed: !holder.every(t => t.completed) })));
+                                    setTodos(todos.map(todo => ({ ...todo, completed: !todos.every(t => t.completed) })));
                                 }
                             },
                             children: []
@@ -947,7 +944,7 @@ function TodoAppcompleted() {
                                             class: "destroy",
                                             "data-testid": "todo-item-button",
                                             onclick: () => {
-                                                setTodos(holder.filter(t => t.id !== todo.id));
+                                                setTodos(todos.filter(t => t.id !== todo.id));
                                             }
                                         },
                                         children: []
@@ -990,7 +987,8 @@ frameWork.asignRoute("/", TodoApp);
 frameWork.asignRoute("/active", TodoAppActive);
 frameWork.asignRoute("/completed", TodoAppcompleted);
 
-window.addEventListener("hashchange", () => {frameWork.Router()
+window.addEventListener("hashchange", () => {
+    frameWork.Router()
     frameWork.patchApp();
 
 });
