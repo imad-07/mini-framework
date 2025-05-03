@@ -8,7 +8,6 @@
 function createStore(initialState = {}) {
   let state = { ...initialState };
   const listeners = new Set();
-  console.log(listeners);
 
   /**
    * Returns the current state
