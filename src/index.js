@@ -65,7 +65,6 @@ function createApp(options = {}) {
 
   // Set up state change subscription
   store.subscribe(() => {
-    console.log(options.view);
     if (currentVNode && typeof options.view === "function") {
       renderApp(options.view);
     }

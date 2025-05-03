@@ -81,7 +81,6 @@ function mount(vnode, container) {
  * @returns {HTMLElement} Updated DOM element
  */
 function patch(element, oldVNode, newVNode) {
-  console.log({ element, oldVNode, newVNode });
   // If node types are different, replace completely
   if (oldVNode.tag !== newVNode.tag) {
     const newElement = createElement(newVNode);
@@ -149,22 +148,20 @@ function patch(element, oldVNode, newVNode) {
   const newChildren = newVNode.children || [];
   const max = Math.max(oldChildren.length, newChildren.length);
 
+  console.log(oldChildren.length, newChildren.length, max);
+
   for (let i = 0; i < max; i++) {
     if (i >= newChildren.length) {
       // Remove excess children
       element.removeChild(element.childNodes[i]);
     } else if (i >= oldChildren.length || !oldChildren[i]) {
       // Add new children
-      element.appendChild(createElement(newChildren[i]));
+      if (newChildren[i]) {
+        element.appendChild(createElement(newChildren[i]));
+      }
     } else {
-      console.log(
-        element.childNodes[i],
-        "|",
-        oldChildren[i],
-        "|",
-        newChildren[i]
-      );
       // Update existing children
+      console.log(element.childNodes[i], oldChildren[i], newChildren[i]);
       patch(element.childNodes[i], oldChildren[i], newChildren[i]);
     }
   }
