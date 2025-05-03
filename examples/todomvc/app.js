@@ -3,12 +3,21 @@ import { createApp, h } from "../../src/index.js";
 import { createTodoInput } from "./components/todoInput.js";
 import { createTodoList } from "./components/todoList.js";
 import { uniqueId } from "../../src/utils.js";
+
+// Define routes
+const routes = {
+  "/": () => renderApp("all"),
+  "/active": () => renderApp("active"),
+  "/completed": () => renderApp("completed"),
+};
+
 // Initialize the app with initial state
 const app = createApp({
   initialState: {
     todos: loadTodos(),
     filter: "all", // 'all', 'active', 'completed'
   },
+  routes,
   rootElement: document.getElementById("app"),
 });
 
@@ -90,13 +99,6 @@ function clearCompleted() {
 function setFilter(filter) {
   app.setState({ filter });
 }
-
-// Define routes
-const routes = {
-  "/": () => renderApp("all"),
-  "/active": () => renderApp("active"),
-  "/completed": () => renderApp("completed"),
-};
 
 // Create router
 const router = app.router;

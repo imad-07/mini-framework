@@ -77,7 +77,6 @@ function createApp(options = {}) {
 
       const component = {
         setState(updates) {
-          console.log({ updates });
           Object.assign(localState, updates);
           if (component.onUpdate) {
             component.onUpdate(localState);
