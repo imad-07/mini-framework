@@ -38,6 +38,7 @@ export function createTodoItem(app) {
             "label",
             {
               onDblClick: () => {
+                console.log(123)
                 component.setState({ editing: true });
                 // Focus the edit field after rendering
                 setTimeout(() => {
@@ -92,8 +93,20 @@ export function createTodoItem(app) {
             `li[data-id="${state.id}"] .edit`
           );
           if (editInput) {
+            editInput.parentElement.classList.add("editing")
             editInput.focus();
+            
           }
+          document.onkeydown = (e =>{
+            if (e.key === "Enter") {
+              editInput.parentElement.classList.remove("editing")
+            }
+          })
+          document.onclick = (e =>{
+            if (e.target != editInput.parentElement) {
+              editInput.parentElement.classList.remove("editing")
+            }
+          })
         }
       },
     }
