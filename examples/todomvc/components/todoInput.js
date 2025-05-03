@@ -18,7 +18,6 @@ export function createTodoInput(app) {
           if (e.key === "Enter") {
             const value = e.target.value.trim();
             if (value) {
-              console.log(props.onAdd);
               props.onAdd(value);
               e.target.value = "";
             }

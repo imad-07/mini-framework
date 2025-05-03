@@ -20,8 +20,6 @@ export function createTodoItem(app) {
         .filter(Boolean)
         .join(" ");
 
-      console.log(props, className);
-
       const checkboxAttrs = {
         class: "toggle",
         type: "checkbox",
