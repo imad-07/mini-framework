@@ -10,110 +10,7 @@ const app = createApp({
     filter: "all", // 'all', 'active', 'completed'
   },
   rootElement: document.getElementById("app"),
-  view: (state) => {
-    const { todos } = state;
-
-    const activeTodoCount = todos.filter((todo) => !todo.completed).length;
-    const completedCount = todos.length - activeTodoCount;
-    const allCompleted = todos.length > 0 && activeTodoCount === 0;
-
-    return h("section", { class: "todoapp" }, [
-      // Input for new todos
-      TodoInput({ onAdd: addTodo }),
-
-      // Main section (only visible when there are todos)
-      todos.length > 0
-        ? h("section", { class: "main" }, [
-            h("input", {
-              id: "toggle-all",
-              class: "toggle-all",
-              type: "checkbox",
-              checked: allCompleted,
-              onClick: () => toggleAll(!allCompleted),
-            }),
-            h("label", { for: "toggle-all" }, ["Mark all as complete"]),
-
-            // Todo list
-            TodoList({
-              todos,
-              filter: state.filter,
-              onToggle: toggleTodo,
-              onRemove: removeTodo,
-              onEdit: editTodo,
-            }),
-          ])
-        : null,
-
-      // Footer (only visible when there are todos)
-      todos.length > 0
-        ? h("footer", { class: "footer" }, [
-            // Todo count
-            h("span", { class: "todo-count" }, [
-              h("strong", {}, [activeTodoCount.toString()]),
-              ` item${activeTodoCount !== 1 ? "s" : ""} left`,
-            ]),
-
-            // Filters
-            h("ul", { class: "filters" }, [
-              h("li", {}, [
-                h(
-                  "a",
-                  {
-                    href: "#/",
-                    class: state.filter === "all" ? "selected" : "",
-                    onClick: (e) => {
-                      e.preventDefault();
-                      router.navigate("/");
-                    },
-                  },
-                  ["All"]
-                ),
-              ]),
-              h("li", {}, [
-                h(
-                  "a",
-                  {
-                    href: "#/active",
-                    class: state.filter === "active" ? "selected" : "",
-                    onClick: (e) => {
-                      e.preventDefault();
-                      router.navigate("/active");
-                    },
-                  },
-                  ["Active"]
-                ),
-              ]),
-              h("li", {}, [
-                h(
-                  "a",
-                  {
-                    href: "#/completed",
-                    class: state.filter === "completed" ? "selected" : "",
-                    onClick: (e) => {
-                      e.preventDefault();
-                      router.navigate("/completed");
-                    },
-                  },
-                  ["Completed"]
-                ),
-              ]),
-            ]),
-
-            // Clear completed button (only visible when there are completed todos)
-            completedCount > 0
-              ? h(
-                  "button",
-                  {
-                    class: "clear-completed",
-                    onClick: clearCompleted,
-                  },
-                  ["Clear completed"]
-                )
-              : null,
-          ])
-        : null,
-    ]);
-  },
+  
 });
 
 // Load todos from localStorage
@@ -329,111 +226,115 @@ window.addEventListener("popstate", () => {
   router.navigate(window.location.pathname, false);
 });
 
-const state = app.getState();
-const { todos } = state;
+const myApp = (state) => {
+  const { todos } = state;
 
-const activeTodoCount = todos.filter((todo) => !todo.completed).length;
-const completedCount = todos.length - activeTodoCount;
-const allCompleted = todos.length > 0 && activeTodoCount === 0;
+  const activeTodoCount = todos.filter((todo) => !todo.completed).length;
+  const completedCount = todos.length - activeTodoCount;
+  const allCompleted = todos.length > 0 && activeTodoCount === 0;
 
-console.log(todos);
-const myApp = h("section", { class: "todoapp" }, [
-  // Input for new todos
-  TodoInput({ onAdd: addTodo }),
+  return h("section", { class: "todoapp" }, [
+    // Input for new todos
+    TodoInput({ onAdd: addTodo }),
 
-  // Main section (only visible when there are todos)
-  todos.length > 0
-    ? h("section", { class: "main" }, [
-        h("input", {
-          id: "toggle-all",
-          class: "toggle-all",
-          type: "checkbox",
-          checked: allCompleted,
-          onClick: () => toggleAll(!allCompleted),
-        }),
-        h("label", { for: "toggle-all" }, ["Mark all as complete"]),
+    // Main section (only visible when there are todos)
+    todos.length > 0
+      ? h("section", { class: "main" }, [
+          h("input", {
+            id: "toggle-all",
+            class: "toggle-all",
+            type: "checkbox",
+            checked: allCompleted,
+            onClick: () => toggleAll(!allCompleted),
+          }),
+          h("label", { for: "toggle-all" }, ["Mark all as complete"]),
 
-        // Todo list
-        TodoList({
-          todos,
-          filter: state.filter,
-          onToggle: toggleTodo,
-          onRemove: removeTodo,
-          onEdit: editTodo,
-        }),
-      ])
-    : null,
+          // Todo list
+          TodoList({
+            todos,
+            filter: state.filter,
+            onToggle: toggleTodo,
+            onRemove: removeTodo,
+            onEdit: editTodo,
+          }),
+        ])
+      : null,
 
-  // Footer (only visible when there are todos)
-  todos.length > 0
-    ? h("footer", { class: "footer" }, [
-        // Todo count
-        h("span", { class: "todo-count" }, [
-          h("strong", {}, [activeTodoCount.toString()]),
-          ` item${activeTodoCount !== 1 ? "s" : ""} left`,
-        ]),
-
-        // Filters
-        h("ul", { class: "filters" }, [
-          h("li", {}, [
-            h(
-              "a",
-              {
-                href: "#/",
-                class: state.filter === "all" ? "selected" : "",
-                onClick: (e) => {
-                  e.preventDefault();
-                  router.navigate("/");
-                },
-              },
-              ["All"]
-            ),
+    // Footer (only visible when there are todos)
+    todos.length > 0
+      ? h("footer", { class: "footer" }, [
+          // Todo count
+          h("span", { class: "todo-count" }, [
+            h("strong", {}, [activeTodoCount.toString()]),
+            ` item${activeTodoCount !== 1 ? "s" : ""} left`,
           ]),
-          h("li", {}, [
-            h(
-              "a",
-              {
-                href: "#/active",
-                class: state.filter === "active" ? "selected" : "",
-                onClick: (e) => {
-                  e.preventDefault();
-                  router.navigate("/active");
-                },
-              },
-              ["Active"]
-            ),
-          ]),
-          h("li", {}, [
-            h(
-              "a",
-              {
-                href: "#/completed",
-                class: state.filter === "completed" ? "selected" : "",
-                onClick: (e) => {
-                  e.preventDefault();
-                  router.navigate("/completed");
-                },
-              },
-              ["Completed"]
-            ),
-          ]),
-        ]),
 
-        // Clear completed button (only visible when there are completed todos)
-        completedCount > 0
-          ? h(
-              "button",
-              {
-                class: "clear-completed",
-                onClick: clearCompleted,
-              },
-              ["Clear completed"]
-            )
-          : null,
-      ])
-    : null,
-]);
+          // Filters
+          h("ul", { class: "filters" }, [
+            h("li", {}, [
+              h(
+                "a",
+                {
+                  href: "#/",
+                  class: state.filter === "all" ? "selected" : "",
+                  onClick: (e) => {
+                    e.preventDefault();
+                    router.navigate("/");
+                  },
+                },
+                ["All"]
+              ),
+            ]),
+            h("li", {}, [
+              h(
+                "a",
+                {
+                  href: "#/active",
+                  class: state.filter === "active" ? "selected" : "",
+                  onClick: (e) => {
+                    e.preventDefault();
+                    router.navigate("/active");
+                  },
+                },
+                ["Active"]
+              ),
+            ]),
+            h("li", {}, [
+              h(
+                "a",
+                {
+                  href: "#/completed",
+                  class: state.filter === "completed" ? "selected" : "",
+                  onClick: (e) => {
+                    e.preventDefault();
+                    router.navigate("/completed");
+                  },
+                },
+                ["Completed"]
+              ),
+            ]),
+          ]),
 
-console.log(myApp);
+          // Clear completed button (only visible when there are completed todos)
+          completedCount > 0
+            ? h(
+                "button",
+                {
+                  class: "clear-completed",
+                  onClick: clearCompleted,
+                },
+                ["Clear completed"]
+              )
+            : null,
+        ])
+      : null,
+  ]);
+};
+
+app.store.subscribe(() => {
+  app.render(myApp);
+});
+
+app.render(myApp);
 
 // renderApp();

@@ -82,7 +82,8 @@ function mount(vnode, container) {
  */
 function patch(element, oldVNode, newVNode) {
   // If node types are different, replace completely
-  if (oldVNode.tag !== newVNode.tag) {
+  if (!oldVNode || oldVNode.tag !== newVNode.tag) {
+    console.log(newVNode);
     const newElement = createElement(newVNode);
     element.parentNode.replaceChild(newElement, element);
     return newElement;
