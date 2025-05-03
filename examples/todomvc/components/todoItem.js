@@ -93,9 +93,7 @@ export function createTodoItem(app) {
             `li[data-id="${state.id}"] .edit`
           );
           if (editInput) {
-            editInput.parentElement.classList.add("editing")
-            editInput.focus();
-            
+            editInput.parentElement.classList.add("editing")            
           }
           document.onkeydown = (e =>{
             if (e.key === "Enter") {
