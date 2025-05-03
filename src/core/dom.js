@@ -11,11 +11,13 @@ function h(tag, attrs = {}, children = []) {
   return {
     tag,
     attrs,
-    children: children.map((child) =>
-      typeof child === "string" || typeof child === "number"
-        ? { text: String(child) }
-        : child
-    ),
+    children: children
+      .filter((child) => child)
+      .map((child) =>
+        typeof child === "string" || typeof child === "number"
+          ? { text: String(child) }
+          : child
+      ),
   };
 }
 
@@ -53,9 +55,7 @@ function createElement(vnode) {
 
   // Append children
   (vnode.children || []).forEach((child) => {
-    if (child) {
-      element.appendChild(createElement(child));
-    }
+    element.appendChild(createElement(child));
   });
 
   return element;
