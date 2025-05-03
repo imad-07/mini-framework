@@ -50,8 +50,6 @@ function createApp(options = {}) {
         ? vnode(store.getState(), router.getParams())
         : vnode;
 
-    console.log({ currentVNode, resolvedVNode });
-
     if (!currentVNode) {
       // Initial render
       rootNode = mount(resolvedVNode, rootElement);
