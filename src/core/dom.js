@@ -144,28 +144,25 @@ function patch(element, oldVNode, newVNode) {
   });
 
   // Update children
-  const oldChildren = oldVNode.children.filter((c) => c) || [];
-  const newChildren = newVNode.children.filter((c) => c) || [];
+  const oldChildren = oldVNode.children || [];
+  const newChildren = newVNode.children || [];
   const max = Math.max(oldChildren.length, newChildren.length);
 
   const elementsToRemove = [];
   for (let i = 0; i < max; i++) {
     if (i >= newChildren.length) {
       // Remove excess children
-      // element.removeChild(element.childNodes[i]); ** OLD STATEMENT **
       elementsToRemove.push(element.childNodes[i]);
     } else if (i >= oldChildren.length) {
       // Add new children
-      if (newChildren[i]) {
-        element.appendChild(createElement(newChildren[i]));
-      }
+      element.appendChild(createElement(newChildren[i]));
     } else {
       // Update existing children
       patch(element.childNodes[i], oldChildren[i], newChildren[i]);
     }
   }
 
-  elementsToRemove.forEach((e) => e.remove());
+  elementsToRemove.forEach((e) => e.remove());  
 
   return element;
 }
