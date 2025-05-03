@@ -149,6 +149,7 @@ function patch(element, oldVNode, newVNode) {
   const max = Math.max(oldChildren.length, newChildren.length);
 
   console.log(oldChildren.length, newChildren.length, max);
+  console.log(oldChildren, newChildren);
 
   for (let i = 0; i < max; i++) {
     if (i >= newChildren.length) {
@@ -161,7 +162,6 @@ function patch(element, oldVNode, newVNode) {
       }
     } else {
       // Update existing children
-      console.log(element.childNodes[i], oldChildren[i], newChildren[i]);
       patch(element.childNodes[i], oldChildren[i], newChildren[i]);
     }
   }

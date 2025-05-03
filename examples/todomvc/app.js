@@ -10,7 +10,6 @@ const app = createApp({
     filter: "all", // 'all', 'active', 'completed'
   },
   rootElement: document.getElementById("app"),
-  
 });
 
 // Load todos from localStorage
@@ -209,9 +208,9 @@ function renderApp(filter) {
                   },
                   ["Clear completed"]
                 )
-              : null,
+              : {},
           ])
-        : null,
+        : {},
     ])
   );
 }
@@ -228,6 +227,7 @@ window.addEventListener("popstate", () => {
 
 const myApp = (state) => {
   const { todos } = state;
+  console.log(todos);
 
   const activeTodoCount = todos.filter((todo) => !todo.completed).length;
   const completedCount = todos.length - activeTodoCount;
