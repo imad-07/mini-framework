@@ -9,6 +9,10 @@ import { h } from "../../../src/index.js";
 export function createTodoItem(app) {
   return app.createComponent(
     (props, children, component) => {
+      console.log({ props, children, component });
+      const {states} = component.getState();
+      console.log({ states });
+      console.log({ props });
       // State for tracking edit mode
       const isEditing = props.editing || false;
 
@@ -19,6 +23,8 @@ export function createTodoItem(app) {
       ]
         .filter(Boolean)
         .join(" ");
+
+      console.log(className);
 
       const checkboxAttrs = {
         class: "toggle",
@@ -44,6 +50,7 @@ export function createTodoItem(app) {
                   const editInput = document.querySelector(
                     `li[data-id="${props.id}"] .edit`
                   );
+                  console.log(editInput);
                   if (editInput) {
                     editInput.focus();
                     editInput.selectionStart = editInput.value.length;
