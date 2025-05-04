@@ -24,8 +24,8 @@ function createApp(options = {}) {
   const domEvents = createDomEvents(rootElement);
 
   // State for tracking rendering
-  let currentVNode = null;
-  let rootNode = null;
+  let currentVNode = null; // {tag: "h1", attrs: {}, children:[]}
+  let rootNode = null; // <h1></h1>
 
   // Create router if routes are provided
   const router = createRouter(routes, (path, params, handler) => {
@@ -79,7 +79,6 @@ function createApp(options = {}) {
         setState(updates) {
           Object.assign(localState, updates);
           if (component.onUpdate) {
-            console.log(component.onUpdate);
             component.onUpdate(localState);
           }
           return component;

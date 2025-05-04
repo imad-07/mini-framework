@@ -7,97 +7,71 @@ import { h } from "../../../src/index.js";
  * @returns {function} TodoItem component function
  */
 export function createTodoItem(app) {
-  return app.createComponent(
-    (props, children, component) => {
-      // State for tracking edit mode
-      const isEditing = app.store.editing || false;
-      console.log(isEditing);
+  return app.createComponent((props, children, component) => {
+    // State for tracking edit mode
+    const { editing } = app.store.getState();
+    const isEditing = editing === props.id;
 
-      // Create class string based on todo status
-      const className = [
-        props.completed ? "completed" : "",
-        isEditing ? "editing" : "",
-      ]
-        .filter(Boolean)
-        .join(" ");
+    // Create class string based on todo status
+    const className = [
+      props.completed ? "completed" : "",
+      isEditing ? "editing" : "",
+    ]
+      .filter(Boolean)
+      .join(" ");
 
-      const checkboxAttrs = {
-        class: "toggle",
-        type: "checkbox",
-        onClick: () => props.onToggle(props.id),
-      };
+    const checkboxAttrs = {
+      class: "toggle",
+      type: "checkbox",
+      onClick: () => props.onToggle(props.id),
+    };
 
-      if (props.completed) {
-        checkboxAttrs.checked = true;
-      }
-
-      return h("li", { class: className, "data-id": props.id }, [
-        // View mode
-        h("div", { class: "view" }, [
-          h("input", checkboxAttrs),
-          h(
-            "label",
-            {
-              onDblClick: () => {
-                component.setState({ editing: true });
-                // Focus the edit field after rendering
-                setTimeout(() => {
-                  const editInput = document.querySelector(
-                    `li[data-id="${props.id}"] .edit`
-                  );
-                  if (editInput) {
-                    editInput.focus();
-                    editInput.selectionStart = editInput.value.length;
-                  }
-                }, 10);
-              },
-            },
-            [props.text]
-          ),
-          h("button", {
-            class: "destroy",
-            onClick: () => props.onRemove(props.id),
-          }),
-        ]),
-
-        // Edit mode
-        h("input", {
-          class: "edit",
-          type: "text",
-          value: props.text,
-          onBlur: (e) => {
-            const newText = e.target.value.trim();
-            if (newText) {
-              props.onEdit(props.id, newText);
-            } else {
-              props.onRemove(props.id);
-            }
-            component.setState({ editing: false });
-          },
-          onKeyDown: (e) => {
-            if (e.key === "Enter") {
-              e.target.blur();
-            } else if (e.key === "Escape") {
-              e.target.value = props.text;
-              e.target.blur();
-            }
-          },
-        }),
-      ]);
-    },
-    {
-      onUpdate: (state) => {
-        if (state.editing) {
-          app.store.setState({ editing: true });
-          // Focus the edit field when entering edit mode
-          const editInput = document.querySelector(
-            `li[data-id="${state.id}"] .edit`
-          );
-          if (editInput) {
-            editInput.focus();
-          }
-        }
-      },
+    if (props.completed) {
+      checkboxAttrs.checked = true;
     }
-  );
+
+    return h("li", { class: className, "data-id": props.id }, [
+      // View mode
+      h("div", { class: "view" }, [
+        h("input", checkboxAttrs),
+        h(
+          "label",
+          {
+            onDblClick: () => {
+              app.store.setState({ editing: props.id });
+            },
+          },
+          [props.text]
+        ),
+        h("button", {
+          class: "destroy",
+          onClick: () => props.onRemove(props.id),
+        }),
+      ]),
+
+      // Edit mode
+      h("input", {
+        class: "edit",
+        type: "text",
+        value: props.text,
+        onBlur: (e) => {
+          const newText = e.target.value.trim();
+          if (newText) {
+            props.onEdit(props.id, newText);
+          } else {
+            props.onRemove(props.id);
+          }
+          component.setState({ editing: false });
+        },
+        onKeyDown: (e) => {
+          if (e.key === "Enter") {
+            e.target.blur();
+          } else if (e.key === "Escape") {
+            e.target.value = props.text;
+            e.target.blur();
+          }
+        },
+      }),
+    ]);
+  });
 }
