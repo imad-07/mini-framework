@@ -3,7 +3,7 @@
 import { h, createElement, mount, patch } from "../src/core/dom.js";
 import { createStore } from "../src/core/state.js";
 import { createRouter } from "../src/core/router.js";
-import { createEventEmitter, createDomEvents } from "../src/core/events.js";
+import { createEventEmitter /*createDomEvents*/ } from "../src/core/events.js";
 import * as utils from "./utils.js";
 
 /**
@@ -21,7 +21,6 @@ function createApp(options = {}) {
   // Create core systems
   const store = createStore(initialState);
   const events = createEventEmitter();
-  const domEvents = createDomEvents(rootElement);
 
   // State for tracking rendering
   let currentVNode = null; // {tag: "h1", attrs: {}, children:[]}
@@ -117,7 +116,6 @@ function createApp(options = {}) {
 
     // Events
     events,
-    domEvents,
 
     // Component factory
     createComponent,
@@ -137,6 +135,6 @@ export {
   createStore,
   createRouter,
   createEventEmitter,
-  createDomEvents,
+  // createDomEvents,
   utils,
 };

@@ -97,80 +97,80 @@ function createEventEmitter() {
  * @param {HTMLElement} element - DOM element to attach events to
  * @returns {object} Event methods
  */
-function createDomEvents(element) {
-  const listeners = new Map();
+// function createDomEvents(element) {
+//   const listeners = new Map();
 
-  /**
-   * Adds an event listener
-   * @param {string} eventName - The event name
-   * @param {function} handler - Event handler
-   * @param {object} options - Event options
-   * @returns {function} Cleanup function
-   */
-  function addEvent(eventName, handler, options = {}) {
-    // Create a wrapper that supports event delegation
-    const wrapper = options.delegate
-      ? (e) => {
-          const target = e.target;
-          if (target.matches(options.delegate)) {
-            handler(e, target);
-          }
-        }
-      : handler;
+//   /**
+//    * Adds an event listener
+//    * @param {string} eventName - The event name
+//    * @param {function} handler - Event handler
+//    * @param {object} options - Event options
+//    * @returns {function} Cleanup function
+//    */
+//   function addEvent(eventName, handler, options = {}) {
+//     // Create a wrapper that supports event delegation
+//     const wrapper = options.delegate
+//       ? (e) => {
+//           const target = e.target;
+//           if (target.matches(options.delegate)) {
+//             handler(e, target);
+//           }
+//         }
+//       : handler;
 
-    element.addEventListener(eventName, wrapper, options);
+//     element.addEventListener(eventName, wrapper, options);
 
-    // Store the listener to be able to remove it later
-    if (!listeners.has(eventName)) {
-      listeners.set(eventName, new Map());
-    }
+//     // Store the listener to be able to remove it later
+//     if (!listeners.has(eventName)) {
+//       listeners.set(eventName, new Map());
+//     }
 
-    listeners.get(eventName).set(handler, wrapper);
+//     listeners.get(eventName).set(handler, wrapper);
 
-    // Return cleanup function
-    return () => {
-      removeEvent(eventName, handler);
-    };
-  }
+//     // Return cleanup function
+//     return () => {
+//       removeEvent(eventName, handler);
+//     };
+//   }
 
-  /**
-   * Removes an event listener
-   * @param {string} eventName - The event name
-   * @param {function} handler - Event handler to remove
-   */
-  function removeEvent(eventName, handler) {
-    const eventMap = listeners.get(eventName);
-    if (eventMap && eventMap.has(handler)) {
-      const wrapper = eventMap.get(handler);
-      element.removeEventListener(eventName, wrapper);
-      eventMap.delete(handler);
+//   /**
+//    * Removes an event listener
+//    * @param {string} eventName - The event name
+//    * @param {function} handler - Event handler to remove
+//    */
+//   function removeEvent(eventName, handler) {
+//     const eventMap = listeners.get(eventName);
+//     if (eventMap && eventMap.has(handler)) {
+//       const wrapper = eventMap.get(handler);
+//       element.removeEventListener(eventName, wrapper);
+//       eventMap.delete(handler);
 
-      if (eventMap.size === 0) {
-        listeners.delete(eventName);
-      }
-    }
-  }
+//       if (eventMap.size === 0) {
+//         listeners.delete(eventName);
+//       }
+//     }
+//   }
 
-  /**
-   * Triggers an event programmatically
-   * @param {string} eventName - The event name
-   * @param {object} detail - Event detail
-   */
-  function triggerEvent(eventName, detail = {}) {
-    const event = new CustomEvent(eventName, {
-      bubbles: true,
-      cancelable: true,
-      detail,
-    });
+//   /**
+//    * Triggers an event programmatically
+//    * @param {string} eventName - The event name
+//    * @param {object} detail - Event detail
+//    */
+//   function triggerEvent(eventName, detail = {}) {
+//     const event = new CustomEvent(eventName, {
+//       bubbles: true,
+//       cancelable: true,
+//       detail,
+//     });
 
-    element.dispatchEvent(event);
-  }
+//     element.dispatchEvent(event);
+//   }
 
-  return {
-    on: addEvent,
-    off: removeEvent,
-    trigger: triggerEvent,
-  };
-}
+//   return {
+//     on: addEvent,
+//     off: removeEvent,
+//     trigger: triggerEvent,
+//   };
+// }
 
-export { createEventEmitter, createDomEvents };
+export { createEventEmitter /*createDomEvents*/ };

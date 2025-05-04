@@ -54,6 +54,7 @@ export function createTodoItem(app) {
         class: "edit",
         type: "text",
         value: props.text,
+        autofocus: editing === props.id, // Need To check
         onBlur: (e) => {
           const newText = e.target.value.trim();
           if (newText) {
@@ -61,7 +62,7 @@ export function createTodoItem(app) {
           } else {
             props.onRemove(props.id);
           }
-          component.setState({ editing: false });
+          app.store.setState({ editing: false });
         },
         onKeyDown: (e) => {
           if (e.key === "Enter") {
