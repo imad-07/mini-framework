@@ -96,8 +96,8 @@ function clearCompleted() {
   });
 }
 
-function setFilter(filter) {
-  app.setState({ filter });
+function setFilter(filter) {  
+  app?.setState({ filter });
 }
 
 // Create router
@@ -105,6 +105,7 @@ const router = app.router;
 
 // Main render function
 function renderApp(filter) {
+  console.log(filter,"|hgfhfg");
   if (filter) {
     setFilter(filter);
   }
@@ -328,6 +329,7 @@ const myApp = (state) => {
 };
 
 app.store.subscribe(() => {
+  
   app.render(myApp);
 });
 

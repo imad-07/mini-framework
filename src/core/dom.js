@@ -122,22 +122,35 @@ function patch(element, oldVNode, newVNode) {
       // Remove old styles
       Object.keys(oldStyle).forEach((prop) => {
         if (!(prop in value)) {
+          console.log(11);
+
           element.style[prop] = "";
         }
       });
-    } else if (oldAttrs[key] !== value) {
+    } else {
+      element.setAttribute(key, value);
+
       // Update regular attributes
       if (key === "checked") {
-        element.checked = true;
+        console.log(element.checked, element);
+
+        element.checked = value;
+
+        if (!value) {
+          element.removeAttribute(key);
+
+        }
+      } else {
+
       }
 
-      element.setAttribute(key, value);
     }
   });
 
   // Remove old attributes that are no longer present
   Object.keys(oldAttrs).forEach((key) => {
-    if (!(key in newAttrs)) {
+    //console.log(key)
+    if (!(key in newAttrs) || !newAttrs[key]) {
       if (key.startsWith("on")) {
         const eventName = key.slice(2).toLowerCase();
         element.removeEventListener(eventName, oldAttrs[key]);
@@ -170,6 +183,10 @@ function patch(element, oldVNode, newVNode) {
   }
 
   elementsToRemove.forEach((e) => e.remove());
+
+  if (element.tagName === 'INPUT') {
+    element.checked = !!newVNode.attrs.checked
+  }
 
   return element;
 }

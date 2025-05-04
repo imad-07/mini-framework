@@ -23,7 +23,7 @@ function createStore(initialState = {}) {
    */
   function setState(update) {
     const newState =
-      typeof update === "function" ? update(state) : { ...state, ...update };
+      typeof update === "function" ? {...state, ...update(state)} : { ...state, ...update };
 
     const changed = Object.keys(newState).some(
       (key) => state[key] !== newState[key]

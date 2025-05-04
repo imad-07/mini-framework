@@ -27,7 +27,7 @@ function createRouter(routes = {}, onRouteChange = () => {}) {
         window.history.pushState(null, '', path);
       }
       
-      updateRoute();
+    updateRoute();
     }
     
     /**
@@ -115,9 +115,12 @@ function createRouter(routes = {}, onRouteChange = () => {}) {
       currentPath = window.location.pathname;
       updateRoute();
     });
+    window.addEventListener(`DOMContentLoaded`, () => {
+      currentPath = window.location.pathname;
+      updateRoute();
+    });
     
     // Initialize route on creation
-    updateRoute();
     
     return {
       navigate,
