@@ -1,5 +1,5 @@
 // TodoItem Component
-import { h } from "../../../src/index.js";
+import { h } from "../../src/index.js";
 
 /**
  * Creates a TodoItem component

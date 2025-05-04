@@ -1,5 +1,5 @@
 // TodoList Component
-import { h } from "../../../src/index.js";
+import { h } from "../../src/index.js";
 import { createTodoItem } from "./todoItem.js";
 
 /**

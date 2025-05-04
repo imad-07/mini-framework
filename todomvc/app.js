@@ -1,8 +1,8 @@
 // TodoMVC Application using MiniDOM Framework
-import { createApp, h } from "../../src/index.js";
+import { createApp, h } from "../src/index.js";
 import { createTodoInput } from "./components/todoInput.js";
 import { createTodoList } from "./components/todoList.js";
-import { uniqueId } from "../../src/utils.js";
+import { uniqueId } from "../src/utils.js";
 
 // Define routes
 const routes = {

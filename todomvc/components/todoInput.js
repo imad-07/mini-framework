@@ -1,5 +1,5 @@
 // TodoInput Component
-import { h } from "../../../src/index.js";
+import { h } from "../../src/index.js";
 
 /**
  * Creates a TodoInput component
