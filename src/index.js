@@ -55,13 +55,6 @@ function createApp(options = {}) {
     }
   }
 
-  // Set up state change subscription
-  store.subscribe(() => {
-    if (currentVNode && typeof options.view === "function") {
-      renderApp(options.view);
-    }
-  });
-
   // Helper for creating components
   function createComponent(renderFn, methods = {}) {
     return (props = {}, children = []) => {
@@ -84,11 +77,6 @@ function createApp(options = {}) {
       const vnode = renderFn(localState, children, component);
       return vnode;
     };
-  }
-
-  // Initialize app if view is provided
-  if (options.view) {
-    renderApp(options.view);
   }
 
   return {

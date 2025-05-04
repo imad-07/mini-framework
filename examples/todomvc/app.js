@@ -106,7 +106,7 @@ const router = app.router;
 // Main render function
 function renderApp(filter) {
   if (filter) {
-    app.setState({ filter });
+    setFilter(filter);
   }
 
   const state = app.getState();
@@ -222,11 +222,6 @@ router.navigate(
   window.location.pathname === "/" ? "/" : window.location.pathname
 );
 
-// Listen for route changes
-window.addEventListener("popstate", () => {
-  router.navigate(window.location.pathname, false);
-});
-
 const myApp = (state) => {
   const { todos } = state;
 
@@ -337,5 +332,3 @@ app.store.subscribe(() => {
 });
 
 app.render(myApp);
-
-// renderApp();
