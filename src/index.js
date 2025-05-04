@@ -79,6 +79,7 @@ function createApp(options = {}) {
         setState(updates) {
           Object.assign(localState, updates);
           if (component.onUpdate) {
+            console.log(component.onUpdate);
             component.onUpdate(localState);
           }
           return component;

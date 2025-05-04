@@ -10,7 +10,8 @@ export function createTodoItem(app) {
   return app.createComponent(
     (props, children, component) => {
       // State for tracking edit mode
-      const isEditing = props.editing || false;
+      const isEditing = app.store.editing || false;
+      console.log(isEditing);
 
       // Create class string based on todo status
       const className = [
@@ -87,6 +88,7 @@ export function createTodoItem(app) {
     {
       onUpdate: (state) => {
         if (state.editing) {
+          app.store.setState({ editing: true });
           // Focus the edit field when entering edit mode
           const editInput = document.querySelector(
             `li[data-id="${state.id}"] .edit`
