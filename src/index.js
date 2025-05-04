@@ -3,7 +3,6 @@
 import { h, createElement, mount, patch } from "../src/core/dom.js";
 import { createStore } from "../src/core/state.js";
 import { createRouter } from "../src/core/router.js";
-// import { createEventEmitter /*createDomEvents*/ } from "../src/core/events.js";
 import * as utils from "./utils.js";
 
 /**
@@ -20,7 +19,6 @@ function createApp(options = {}) {
 
   // Create core systems
   const store = createStore(initialState);
-  // const events = createEventEmitter();
 
   // State for tracking rendering
   let currentVNode = null;
@@ -34,9 +32,6 @@ function createApp(options = {}) {
         renderApp(routeResult);
       }
     }
-
-    // Notify about route change
-    // events.emit("routeChange", { path, params });
   });
 
   /**
@@ -58,8 +53,6 @@ function createApp(options = {}) {
       rootNode = patch(rootNode, currentVNode, resolvedVNode);
       currentVNode = resolvedVNode;
     }
-
-    // events.emit("render", resolvedVNode);
   }
 
   // Set up state change subscription

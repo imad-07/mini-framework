@@ -55,32 +55,10 @@ function createStore(initialState = {}) {
     };
   }
 
-  /**
-   * Creates a derived state that depends on the main state
-   * @param {function} selector - Selector function
-   * @param {function} onChange - Change handler
-   * @returns {function} Unsubscribe function
-   */
-  function connect(selector, onChange) {
-    let previousSelectedState = selector(state);
-
-    const handleChange = (newState) => {
-      const newSelectedState = selector(newState);
-
-      if (previousSelectedState !== newSelectedState) {
-        previousSelectedState = newSelectedState;
-        onChange(newSelectedState);
-      }
-    };
-
-    return subscribe(handleChange);
-  }
-
   return {
     getState,
     setState,
     subscribe,
-    connect,
   };
 }
 
