@@ -127,6 +127,10 @@ function patch(element, oldVNode, newVNode) {
       });
     } else if (oldAttrs[key] !== value) {
       // Update regular attributes
+      if (key === "checked") {
+        element.checked = true;
+      }
+
       element.setAttribute(key, value);
     }
   });
@@ -138,6 +142,9 @@ function patch(element, oldVNode, newVNode) {
         const eventName = key.slice(2).toLowerCase();
         element.removeEventListener(eventName, oldAttrs[key]);
       } else {
+        if (key === "checked") {
+          element.checked = false;
+        }
         element.removeAttribute(key);
       }
     }
@@ -162,7 +169,7 @@ function patch(element, oldVNode, newVNode) {
     }
   }
 
-  elementsToRemove.forEach((e) => e.remove());  
+  elementsToRemove.forEach((e) => e.remove());
 
   return element;
 }
