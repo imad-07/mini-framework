@@ -13,7 +13,7 @@ export function createTodoInput(app) {
       h("input", {
         class: "new-todo",
         placeholder: "What needs to be done?",
-        autofocus: true,
+        autofocus: !props.editing,
         onKeyDown: (e) => {
           if (e.key === "Enter") {
             const value = e.target.value.trim();

@@ -96,7 +96,7 @@ function clearCompleted() {
   });
 }
 
-function setFilter(filter) {  
+function setFilter(filter) {
   app?.setState({ filter });
 }
 
@@ -223,7 +223,7 @@ router.navigate(
 );
 
 const myApp = (state) => {
-  const { todos } = state;
+  const { todos, editing } = state;
 
   const activeTodoCount = todos.filter((todo) => !todo.completed).length;
   const completedCount = todos.length - activeTodoCount;
@@ -231,7 +231,7 @@ const myApp = (state) => {
 
   return h("section", { class: "todoapp" }, [
     // Input for new todos
-    TodoInput({ onAdd: addTodo }),
+    TodoInput({ onAdd: addTodo, editing }),
 
     // Main section (only visible when there are todos)
     todos.length > 0
@@ -328,7 +328,6 @@ const myApp = (state) => {
 };
 
 app.store.subscribe(() => {
-  
   app.render(myApp);
 });
 
