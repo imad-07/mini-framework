@@ -105,7 +105,6 @@ const router = app.router;
 
 // Main render function
 function renderApp(filter) {
-  console.log(filter,"|hgfhfg");
   if (filter) {
     setFilter(filter);
   }

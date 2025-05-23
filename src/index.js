@@ -1,5 +1,4 @@
 // MiniDOM: Main Entry Point
-
 import { h, createElement, mount, patch } from "../src/core/dom.js";
 import { createStore } from "../src/core/state.js";
 import { createRouter } from "../src/core/router.js";
@@ -25,9 +24,9 @@ function createApp(options = {}) {
   let rootNode = null;
 
   // Create router if routes are provided
-  const router = createRouter(routes, (path, params, handler) => {
+  const router = createRouter(routes, (handler) => {
     if (handler) {
-      const routeResult = handler(params, store.getState());
+      const routeResult = handler(store.getState());
       if (routeResult) {
         renderApp(routeResult);
       }
@@ -40,9 +39,7 @@ function createApp(options = {}) {
    */
   function renderApp(vnode) {
     const resolvedVNode =
-      typeof vnode === "function"
-        ? vnode(store.getState(), router.getParams())
-        : vnode;
+      typeof vnode === "function" ? vnode(store.getState()) : vnode;
 
     if (!currentVNode) {
       // Initial render
