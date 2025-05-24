@@ -24,11 +24,8 @@ export function createTodoItem(app) {
       class: "toggle",
       type: "checkbox",
       onClick: () => props.onToggle(props.id),
+      checked: props.completed,
     };
-
-    if (props.completed) {
-      checkboxAttrs.checked = true;
-    }
 
     return h("li", { class: className, "data-id": props.id }, [
       // View mode
