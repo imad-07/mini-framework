@@ -12,13 +12,13 @@
 .edit {
   display: none;
 }
+/* .toggle,
+.editing button {
+  display: none !important;
+} */
 
-.editing .edit {
-  display: block;
-}
-
-.editing .view {
-  display: none;
+.view {
+  display: block !important;
 }
 
 .hidden {

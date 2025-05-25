@@ -20,56 +20,61 @@ export function createTodoItem(app) {
       .filter(Boolean)
       .join(" ");
 
-    const checkboxAttrs = {
-      class: "toggle",
-      type: "checkbox",
-      onClick: () => props.onToggle(props.id),
-      checked: props.completed,
-    };
+    // const checkboxAttrs = ;
 
     return h("li", { class: className, "data-id": props.id }, [
       // View mode
       h("div", { class: "view" }, [
-        h("input", checkboxAttrs),
+        h("input", {
+          class: "toggle",
+          type: "checkbox",
+          onClick: () => props.onToggle(props.id),
+          checked: props.completed,
+        }),
         h(
           "label",
           {
             onDblClick: () => {
               app.store.setState({ editing: props.id });
             },
+            onBlur: (e) => {
+              const newText = e.target.textContent.trim();
+              if (newText) {
+                props.onEdit(props.id, newText);
+              } else {
+                props.onRemove(props.id);
+              }
+              app.store.setState({ editing: false });
+            },
+            onKeyDown: (e) => {
+              if (e.key === "Enter") {
+                e.target.blur();
+              } else if (e.key === "Escape") {
+                e.target.textContent = props.text;
+                e.target.blur();
+              }
+            },
+            contentEditable: isEditing ? true : false,
+            tabIndex: isEditing ? 0 : -1,
           },
           [props.text]
         ),
-        h("button", {
-          class: "destroy",
-          onClick: () => props.onRemove(props.id),
-        }),
+        !isEditing &&
+          h("button", {
+            class: "destroy",
+            onClick: () => props.onRemove(props.id),
+          }),
       ]),
 
-      // Edit mode
-      h("input", {
-        class: "edit",
-        type: "text",
-        value: props.text,
-        autofocus: editing === props.id, // Need To check
-        onBlur: (e) => {
-          const newText = e.target.value.trim();
-          if (newText) {
-            props.onEdit(props.id, newText);
-          } else {
-            props.onRemove(props.id);
-          }
-          app.store.setState({ editing: false });
-        },
-        onKeyDown: (e) => {
-          if (e.key === "Enter") {
-            e.target.blur();
-          } else if (e.key === "Escape") {
-            e.target.value = props.text;
-            e.target.blur();
-          }
-        },
-      }),
+      // editing === props.id
+      //   ? h("input", {
+      //       class: "edit",
+      //       type: "text",
+      //       value: props.text,
+      //       autofocus: true, // Need To check
+      //
+      //     })
+      //   : "",
     ]);
   });
 }
