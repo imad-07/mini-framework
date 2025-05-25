@@ -12,10 +12,15 @@
 .edit {
   display: none;
 }
-/* .toggle,
+
+.editing label {
+  background-image: none !important;
+}
+
+.editing .toggle,
 .editing button {
-  display: none !important;
-} */
+  display: none;
+}
 
 .view {
   display: block !important;

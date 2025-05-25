@@ -38,20 +38,20 @@ export function createTodoItem(app) {
               app.store.setState({ editing: props.id });
             },
             onBlur: (e) => {
-              const newText = e.target.textContent.trim();
-              if (newText) {
-                props.onEdit(props.id, newText);
-              } else {
-                props.onRemove(props.id);
-              }
+              e.target.textContent = props.text;
+              
               app.store.setState({ editing: false });
             },
             onKeyDown: (e) => {
               if (e.key === "Enter") {
-                e.target.blur();
+                const newText = e.target.textContent.trim();
+                if (newText) {
+                  props.onEdit(props.id, newText);
+                } else {
+                  props.onRemove(props.id);
+                }
+                app.store.setState({ editing: false });
               } else if (e.key === "Escape") {
-                e.target.textContent = props.text;
-                e.target.blur();
               }
             },
             contentEditable: isEditing ? true : false,
